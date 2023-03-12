@@ -1,0 +1,198 @@
+<style>
+  a.popup-trigger {
+    border: 1px solid;
+    padding: 15px 135px;
+    font-size: 20px;
+    background: black;
+    color: white;
+  }
+
+  a.popup-trigger:hover {
+    color: black;
+    background: white;
+  }
+
+  .popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .popup-content {
+    background-color: #fff;
+    padding: 5px;
+    max-width: 800px;
+    max-height: 95%;
+    min-height: 350px;
+    overflow: auto;
+    margin: 10px auto auto;
+  }
+
+  .popup-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: black;
+    padding: 5px;
+    margin-bottom: -40px;
+  }
+  .button-container .button {
+    background: transparent;
+    border: none;
+    color: white;
+  }
+  .button-container .button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .arrowIcon {
+    display: none;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid white;
+  }
+  .button.selected .arrowIcon {
+    display: block;
+  }
+
+  #content3 {
+    margin: 40px auto !important;
+  }
+  #content3 b {
+    font-size: 60px;
+  }
+  #content3 i {
+    font-size: 20px;
+  }
+
+
+  div#content3 p {
+    display: inline;
+    border: 2px solid;
+    padding: 10px 20px;
+  }
+  div#content5 {
+    text-align: left;
+    margin: 50px 10px 0;
+  }
+  .yotpo-background.yotpo-align-text {
+    margin: 40px 0;
+  }
+  .yotpo-container-headline {
+    display: none;
+  }
+</style>
+<a href="#" class="popup-trigger">Earn/Redeem Points</a>
+
+<div class="popup-container">
+  <div class="popup-content">
+    <div class="youbox">
+      <div class="yotpo-widget-instance" data-yotpo-instance-id="353707"></div>
+      <div class="button-container">
+        <button class="button" data-target="content1">Earn
+          <span class="arrowIcon"></span>
+
+        </button>
+        <button class="button" data-target="content2">Redeem
+          <span class="arrowIcon"></span>
+
+        </button>
+        <button class="button" data-target="content3">Refer a Friend
+          <span class="arrowIcon"></span>
+
+        </button>
+        <button class="button" data-target="content4">My Rewards
+          <span class="arrowIcon"></span>
+
+        </button>
+        <button class="button" data-target="content5">FAQs
+          <span class="arrowIcon"></span>
+
+        </button>
+      </div>
+      <div class="content-container">
+        <div id="content1" class="content">
+          <div class="yotpo-widget-instance" data-yotpo-instance-id="353709"></div>
+        </div>
+        <div id="content2" class="content">
+          <div class="yotpo-widget-instance" data-yotpo-instance-id="353705"></div>
+        </div>
+        <div id="content3" class="content">
+          <b>💝</b><br>
+          <i>Give your friends 10% off their first order and get $10 for each successful referral.</i>
+          <br><br>
+          <p id="referlink">https://www.iodomani.us/collections</p>
+          <button onclick="copyText()">Copy link</button>
+          <br><br>
+          {% render 'social-sharing' %}
+        </div>
+        <div id="content4" class="content">
+          <div class="yotpo-widget-instance" data-yotpo-instance-id="353706"></div>
+        </div>
+        <div id="content5" class="content">
+          {% render 'faq-you' %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#" class="popup-close">Close</a>
+</div>
+
+
+<script>
+  const buttons = document.querySelectorAll('.button');
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const target = button.dataset.target;
+      const content = document.getElementById(target);
+      const contents = document.querySelectorAll('.content');
+      contents.forEach(content => content.style.display = 'none');
+      content.style.display = 'block';
+      buttons.forEach(button => button.classList.remove('selected'));
+      button.classList.add('selected');
+    });
+  });
+  document.querySelector('.content').style.display = 'block';
+  document.querySelector('.button').classList.add('selected');
+
+  function copyText() {
+    var text = document.getElementById("referlink").textContent;
+    navigator.clipboard.writeText(text);
+  }
+
+
+  $(document).ready(function() {
+    $('.popup-trigger').click(function(e) {
+      e.preventDefault();
+      $('.popup-container').fadeIn();
+    });
+    $('.popup-close').click(function() {
+      $('.popup-container').fadeOut();
+    });
+    $(document).mouseup(function(e) {
+      var container = $('.popup-content');
+      if (! container.is(e.target) && container.has(e.target).length === 0) {
+        $('.popup-container').fadeOut();
+      }
+    });
+  });
+</script>
